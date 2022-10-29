@@ -1,0 +1,139 @@
+@import url('./assets/quill/quill.core.css');
+@import url('./assets/quill/quill.snow.css');
+
+:root{
+  --grisclair:#E9E9E9;
+  --jaune:#F7C45F;
+  --orange:#b8820f;
+  --vert:#33A537;
+  --vertsombre:#007c04;
+  --bleu:#28364A;
+  --sombre:#202A3A;
+  --rose : #F14668;
+  --jaunea:rgba(247,196,95,0.3);
+}
+
+html, body, main{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  font-family: 'Raleway', sans-serif;
+}
+body, main, section{
+  display:flex;
+  font-weight: 300;
+}
+:host{
+  display:flex;
+  width:100%;
+  height:100%;
+}
+h1{
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+h2{
+  font-size:1.6rem;
+}
+h3{
+  margin:5px 0;
+}
+h1, h2{
+  font-weight: 100;
+}
+main{
+  width:100vw;
+  height:100vh;
+  flex-flow: row nowrap;
+}
+a{
+  text-decoration: none;
+  font-weight: 600;
+}
+form{
+  display:flex;
+  flex-flow: column nowrap;
+  margin:auto;
+}
+input, textarea, select, option{
+  font-family: 'Raleway', sans-serif;
+  transition:all .3s ease;
+  border:1px solid var(--jaunea);
+  margin:5px;
+  padding:10px;
+}
+select{
+  width:max-content;
+}
+input[type=submit]{
+  width:max-content;
+  background-color: var(--vertsombre);
+  color:var(--grisclair);
+}
+input[type=submit]:hover{
+  background-color: var(--vert);
+}
+input[type=reset]{
+  width:max-content;
+  background-color: var(--rose);
+  color:var(--grisclair);
+}
+input[type=reset]:hover{
+  background-color: var(--jaune);
+}
+button{
+  padding:10px;
+  background-color: var(--bleu);
+  color:var(--grisclair);
+  border:0;
+  width:max-content;
+  transition: all .3s ease;
+}
+button.suppr{
+  background-color: var(--rose);
+}
+button.annule{
+  background-color: var(--orange);
+}
+button.valide{
+  background-color: var(--vertsombre);
+}
+button:hover{
+  background-color: var(--jaune);
+}
+main > aside{
+  background-color: var(--sombre);
+  color: var(--grisclair);
+  width:100px;
+}
+main > section {
+  width:calc(100vw - 100px);
+  box-sizing: border-box;
+  padding-left:20px;
+}
+aside > nav {
+  display:flex;
+  flex-flow: column nowrap;
+  margin-top:50px;
+}
+aside > nav > a {
+  display:flex;
+  flex-flow: column nowrap;
+  margin:10px 0;
+  color: var(--grisclair);
+  font-weight: 100;
+  width:100%;
+  text-align: center;
+  box-sizing: border-box;
+}
+aside > nav > a > .pi{
+  font-size: 32px;
+}
+i{
+  margin:5px;
+}
+hr{
+  border:0;
+  border-bottom: 1px solid var(--jaunea);
+}

@@ -1,0 +1,16 @@
+<main>
+<section>
+  <a href="/" title="Recharger la page">
+    <img src="assets/images/Logo_fondsGP_lettres.png" alt="Logo du fonds de dotation Gérard Perrier">
+  </a>
+  <form (submit)="auth.idUser(connexion)" #f>
+    <h1>Connexion</h1>
+    <label for="mail">Saisissez votre email</label>
+    <input name="mail" placeholder="Saisissez votre email de connexion" [(ngModel)]="connexion.mail">
+    <label for="pass">Saisissez votre mot de passe</label>
+    <input name="pass" type="password" placeholder="Saisissez votre mot de passe" [(ngModel)]="connexion.pass">
+    <input type="reset" value="Annuler">
+    <input type="submit" value="Se connecter">
+  </form>
+</section>
+</main>

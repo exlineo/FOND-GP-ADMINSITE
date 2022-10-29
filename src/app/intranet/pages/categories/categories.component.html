@@ -1,0 +1,51 @@
+<h1>{{ page.titre }}</h1>
+<h3>{{ page.accroche }}</h3>
+<section>
+  <label for="liens">{{ page.contenu }}</label>
+  <p>
+  <select [(ngModel)]="catIndex" (change)="getCat()" name="liens" placeholder="Sélectionnez un lien à modifier">
+    <option *ngFor="let c of get.categories; let i = index" [value]="i">{{ c.titre }}</option>
+  </select>
+  <button (click)="initCat()">ou créez une nouvelle catégorie</button>
+</p>
+  <hr>
+  <article>
+    <h2 *ngIf="catIndex > -1">Catégorie éditée : {{ categorie.titre }}</h2>
+    <div>
+      <label for="titre">Titre *</label>
+      <input [(ngModel)]="categorie.titre" name="titre" placeholder="Titre" required>
+
+      <label for="alias">Alias *</label>
+      <input [(ngModel)]="categorie.alias" name="alias"
+        placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
+
+      <label for="description">Description</label>
+      <textarea [(ngModel)]="categorie.description" name="description"></textarea>
+
+      <label for="ordre">Ordre</label>
+      <input [(ngModel)]="categorie.ordre" name="ordre" placeholder="0" type="number">
+
+      <label>Articles liés</label>
+      <ul>
+        <li *ngFor="let a of categorie.articles">{{ a.titre }}</li>
+      </ul>
+    </div>
+
+    <div>
+      <label for="categorie">Choisissez un média</label>
+      <figure>
+
+      </figure>
+    </div>
+
+  </article>
+  <article>
+    <button *ngIf="catIndex > -1" (click)="supprCat()" class="suppr">Suprimer</button>
+    <button (click)="initCat()" class="annule">Annuler</button>
+    <button (click)="setCat()" class="valide">Enregistrer</button>
+  </article>
+
+</section>
+<form>
+
+</form>

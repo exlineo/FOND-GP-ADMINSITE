@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "fonds-gp": {
+      "hosting": {
+        "FONDS-GP-ADMINSITE": [
+          "fonds-gp"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "fonds-gp"
+  }
+}
