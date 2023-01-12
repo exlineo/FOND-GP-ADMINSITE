@@ -1,1 +1,114 @@
-<p>articles works!</p>
+<aside>
+  <div *ngIf="get.pages.articles">
+    <h1>{{ get.pages['articles'].titre }}</h1>
+    <h3>{{ get.pages['articles'].accroche }}</h3>
+    <button (click)="initArticle()">Créer un nouvel article</button>
+    <p>Sinon...</p>
+    <p>{{ get.pages['articles'].contenu }}</p>
+  </div>
+  <ul>
+    <li *ngFor="let m of get.articles; let i = index" (click)="getArticle(i)">{{ m.titre }} <span
+        *ngIf="m.categories">({{ m.categories.toString() }})</span></li>
+  </ul>
+</aside>
+<!-- EDITION D'UN ARTICLE -->
+<section id="page" *ngIf="article">
+  <!-- EDITER OU CREER UN ARTICLE -->
+  <article>
+    <h2 *ngIf="article && index > -1">Vous éditez l'article <strong><em>{{ article.titre }}</em></strong></h2>
+    <h2 *ngIf="article && index == -1">Vous créez un nouvel article</h2>
+    <form #f="ngForm">
+      <label for="titre">Titre *</label>
+      <input [(ngModel)]="article.titre" name="titre" placeholder="Titre" required>
+
+      <label for="alias">Alias *</label>
+      <input [(ngModel)]="article.alias" name="alias" pattern="[a-z0-9\-\_]+"
+        placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
+
+      <label for="categories">Ajouter des catégories à l'article, ces catégories seront liées à des menus</label>
+      <select [(ngModel)]="article.categories" name="categories" multiple>
+        <option *ngFor="let c of get.categories; let i = index" [value]="c.alias"> {{c.titre}}</option>
+      </select>
+
+      <label for="intro">Intro</label>
+      <p-editor name="intro" [(ngModel)]="article.intro" [style]="{'height':'250px'}"></p-editor>
+      <!-- <textarea [(ngModel)]="article.intro" name="intro" rows="8"></textarea> -->
+      <div class="vignettes">
+        <img [src]="article.mediaIntro!.url" [alt]="article.mediaIntro!.caption" class="vignette"
+          *ngIf="article.mediaIntro!.url">
+        <button (click)="deleteImage('intro')" class="annule"><i class="pi pi-trash"></i></button>
+        <button (click)="editImage('intro')" class="valid"><i class="pi pi-images"></i></button>
+      </div>
+
+      <label for="contenu">Contenu</label>
+      <p-editor name="contenu" [(ngModel)]="article.contenu" [style]="{'height':'400px'}"></p-editor>
+      <div class="vignettes">
+        <img [src]="article.mediaContenu!.url" [alt]="article.mediaContenu!.caption" class="vignette"
+          *ngIf="article.mediaContenu!.url">
+        <button (click)="deleteImage('contenu')" class="annule"><i class="pi pi-trash"></i></button>
+        <button (click)="editImage('contenu')" class="valid"><i class="pi pi-images"></i></button>
+      </div>
+
+      <label>Liens de l'article</label>
+      <ul *ngIf="article.liens!.length > 0">
+        <li *ngFor="let l of article.liens; let i = index">
+          {{ l.titre }} ({{ l.url }}), légende : <em>{{ l.caption }}</em>, cible : <em>{{ l.cible }}</em> <a
+            (click)="deleteLien(i)" title="supprimer le lien"><i class="pi pi-trash"></i></a>
+        </li>
+      </ul>
+
+      <button (click)="setLien()" class="neutre">Ajouter un lien à l'article</button>
+      <div *ngIf="lienBool">
+        <label for="titreLien">Titre du lien</label>
+        <input [(ngModel)]="lien.titre" name="titreLien">
+
+        <label for="urlLien">URL du lien</label>
+        <input [(ngModel)]="lien.url" name="urlLien">
+
+        <label for="captionLien">Une légende ?</label>
+        <input [(ngModel)]="lien.caption" name="captionLien">
+
+        <p>
+          <input type="radio" id="blank" value="_blank" name="cible" [(ngModel)]="lien.cible">
+          <label for="blank">Lien externe</label>
+          <input type="radio" id="self" value="_self" name="cible" [(ngModel)]="lien.cible">
+          <label for="self">Lien à l'intérieur du site</label>
+        </p>
+
+        <button (click)="addLien()" class="valide">Ajouter le lien</button>
+      </div>
+
+      <label for="ordre">Ordre</label>
+      <input [(ngModel)]="article.ordre" name="ordre" placeholder="0" type="number">
+
+      <article class="boutons">
+        <button *ngIf="index != -1" (click)="supprArticle()" [disabled]="!f.valid" class="suppr">Supprimer</button>
+        <button (click)="initArticle()" class="annule">Annuler</button>
+        <button (click)="setArticle()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouvel
+          article</button>
+        <button (click)="setArticle()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">Enregistrer les mises
+          à jours</button>
+      </article>
+    </form>
+  </article>
+  <!-- AFFICHER LE RENDU DE L'ARTICLE ECRIT -->
+  <article>
+    <h3>Présentation de l'article</h3>
+    <h2>{{ article.titre }}</h2>
+    <blockquote>
+      <img [src]="article.mediaIntro.url" [alt]="article.mediaIntro.caption" *ngIf="article.mediaIntro">
+      <div [innerHTML]="article.intro"></div>
+    </blockquote>
+    <div>
+      <img [src]="article.mediaContenu.url" [alt]="article.mediaContenu.caption" *ngIf="article.mediaContenu">
+      <div [innerHTML]="article.contenu">
+      </div>
+    </div>
+  </article>
+</section>
+<!-- AFFICHER LA LISTE DES MEDIAS -->
+<section [class.arrive]="imgTarget" id="medias">
+  <h2>Liste des médias disponibles</h2>
+  <a class="close" (click)="imgTarget = undefined"></a>
+  <app-liste-medias [target]="imgTarget" (choix)="imageChoisie($event)"></app-liste-medias>
+</section>

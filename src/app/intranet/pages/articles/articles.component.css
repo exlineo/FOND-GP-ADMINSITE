@@ -1,0 +1,47 @@
+:host{
+  display:flex;
+  flex-flow:row nowrap;
+  height:100vh;
+}
+aside{
+  width:250px;
+  padding:15px;
+}
+#page{
+  width:calc(100% - 250px);
+  padding-left:20px;
+  overflow:hidden;
+  overflow-y:auto;
+  flex-flow:row nowrap;
+}
+#page > article{
+  width:50%;
+  padding-right:20px;
+}
+#page > article{
+  width:50%;
+  padding-right:20px;
+}
+aside li{
+  cursor: pointer;
+}
+form > article > div > div{
+  flex-direction: row;
+}
+/* Afficher les médias */
+#medias{
+  position: absolute;
+  left:100vw;
+  top:0;
+  width: calc(100vw - 350px);
+  transition:all .3s ease;
+  background-color: white;
+  height:100vh;
+  z-index:10;
+  display: none;
+}
+.arrive {
+  display: block !important;
+  left: 350px !important;
+  width: calc(100vw - 350px);
+}

@@ -20,6 +20,9 @@ html, body, main{
   height:100%;
   font-family: 'Raleway', sans-serif;
 }
+* {
+  box-sizing: border-box;
+}
 body, main, section{
   display:flex;
   font-weight: 300;
@@ -47,21 +50,45 @@ main{
   height:100vh;
   flex-flow: row nowrap;
 }
+article{
+  display: flex;
+}
 a{
   text-decoration: none;
   font-weight: 600;
 }
-form{
+form, form > div, form > article > div{
   display:flex;
   flex-flow: column nowrap;
   margin:auto;
 }
+form > article{
+  display:flex;
+  flex-flow: row nowrap;
+}
+form > article > div{
+  margin:30px;
+  width:50%;
+}
+form > article > div > div{
+  display:flex;
+  flex-flow: column nowrap;
+}
+label{
+  margin-top:15px;
+  padding-top:15px;
+  border-top: 1px solid var(--rose);
+}
 input, textarea, select, option{
   font-family: 'Raleway', sans-serif;
+  /* font-weight: 600; */
   transition:all .3s ease;
   border:1px solid var(--jaunea);
   margin:5px;
   padding:10px;
+}
+input.ng-valid, textarea.ng-valid{
+  border-bottom: 1px solid var(--vert);
 }
 select{
   width:max-content;
@@ -89,6 +116,8 @@ button{
   border:0;
   width:max-content;
   transition: all .3s ease;
+  margin:5px;
+  cursor: pointer;
 }
 button.suppr{
   background-color: var(--rose);
@@ -99,18 +128,29 @@ button.annule{
 button.valide{
   background-color: var(--vertsombre);
 }
+button.neutre{
+  border-color:#28364A;
+  background-color: var(--grisclair);
+  color:var(--sombre);
+}
 button:hover{
   background-color: var(--jaune);
+}
+input[disabled], input[disabled]:hover, button[disabled], button[disabled]:hover{
+  cursor: auto;
+  opacity: .6;
+  background-color: grey;
 }
 main > aside{
   background-color: var(--sombre);
   color: var(--grisclair);
   width:100px;
 }
+section aside{
+  background-color: var(--jaune);
+}
 main > section {
   width:calc(100vw - 100px);
-  box-sizing: border-box;
-  padding-left:20px;
 }
 aside > nav {
   display:flex;
@@ -125,7 +165,6 @@ aside > nav > a {
   font-weight: 100;
   width:100%;
   text-align: center;
-  box-sizing: border-box;
 }
 aside > nav > a > .pi{
   font-size: 32px;
@@ -136,4 +175,130 @@ i{
 hr{
   border:0;
   border-bottom: 1px solid var(--jaunea);
+}
+li{
+  margin:10px 0;
+}
+/* --------- PAGE ----------- */
+#page {
+  width:100%;
+  margin: 0 auto;
+  flex-flow: column nowrap;
+}
+router-outlet + * {
+  width:100%;
+  display:flex;
+  flex-flow: column nowrap;
+}
+#page h1, #page h2{
+  width:100%;
+}
+#page > article{
+  width:100%;
+  display:flex;
+  flex-flow: row wrap;
+}
+#page > article > div, #page > article > div > div {
+  display:flex;
+  flex-flow: column nowrap;
+  padding:20px;
+}
+#page > article > div {
+  width:50%;
+}
+#page p{
+  display:flex;
+  flex-flow: row nowrap;
+}
+/* COMPOSANTS SPECIFIQUES */
+app-liste-medias{
+  padding: 0 20px;
+  display:flex;
+  flex-flow: column nowrap;
+}
+app-liste-medias > section{
+  width: 100%;
+  height:85%;
+  overflow: hidden;
+  overflow-y: auto;
+}
+app-liste-medias > aside{
+  width: 100%;
+  height:15%;
+}
+app-liste-medias article{
+  display:flex;
+  flex-flow: column nowrap;
+  margin:10px;
+  max-width:250px;
+  width:33%;
+}
+app-liste-medias article:hover figure{
+  border-bottom:1px solid var(--jaunea);
+  padding-bottom:15px;
+  transform: scale(1.05);
+}
+app-liste-medias figure{
+  width:100%;
+  display:flex;
+  flex-flow: column nowrap;
+  margin:0;
+  transition: all .3s ease;
+}
+app-liste-medias figcaption{
+  font-size: 90%;
+}
+app-liste-medias figure > img{
+  width:100%;
+}
+app-liste-medias aside > div, app-liste-medias form {
+  display:flex;
+  flex-flow: row nowrap;
+  margin: 0 10px;
+}
+
+/* STYLE PARTICULIERS */
+.boutons{
+  justify-content: center;
+}
+.vignettes{
+  display:flex;
+  flex-flow:row nowrap;
+  align-items: center;
+  margin-top: 15px;
+}
+.vignettes > * {
+  margin-right: 10px;
+}
+.vignettes img{
+  max-width: 200px;
+}
+/* Croix pour fermer une fenêtre */
+.close {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+  width: 32px;
+  height: 32px;
+  opacity: 0.3;
+  z-index:1002;
+  transition:all .3s ease;
+}
+.close:hover {
+  opacity: 1;
+  transform: rotate(90deg);
+}
+.close:before, .close:after {
+  position: absolute;
+  left: 15px;
+  content: ' ';
+  height: 33px;
+  width: 2px;
+  background-color: var(--sombre);
+}
+.close:before {
+  transform: rotate(45deg);
+}
+.close:after {
+  transform: rotate(-45deg);
 }

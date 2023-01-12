@@ -1,0 +1,30 @@
+<section>
+  <article *ngFor="let a of get.medias; let i = index" (click)="selectMedia(a)">
+    <h3>Titre : {{ a.titre }}</h3>
+    <!-- <figure [style.backgroundImage]="'url('+a.url+')'"> -->
+    <figure>
+      <img [src]="a.url" alt="a.caption">
+      <figcaption>{{ a.caption }}</figcaption>
+    </figure>
+    <p class="edition" *ngIf="edition">
+      <i class="pi pi-file-edit"></i>
+      <i class="pi pi-trash"></i>
+    </p>
+    <!-- <img [src]="a.url" alt="a.caption"> -->
+  </article>
+</section>
+<aside>
+  <h2>Téléverser un fichier</h2>
+  <div>
+    <input type="file" (change)="setFile($event)" name="fichier"
+      accept=".rtf, .txt, .pdf, .gif, .webp, .jpeg, .png, .jpg">
+    <form (submit)="televerseMedia()">
+      <input name="titre" [(ngModel)]="mediaForm.titre" placeholder="Titre du document">
+      <input name="caption" [(ngModel)]="mediaForm.caption" placeholder="Légende ou description">
+      <div>
+        <input type="reset" value="Annuler">
+        <input type="submit" value="Enregistrer">
+      </div>
+    </form>
+  </div>
+</aside>

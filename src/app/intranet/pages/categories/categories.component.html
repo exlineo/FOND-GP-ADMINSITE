@@ -1,7 +1,9 @@
-<h1>{{ page.titre }}</h1>
-<h3>{{ page.accroche }}</h3>
-<section>
-  <label for="liens">{{ page.contenu }}</label>
+<header *ngIf="get.pages['categories']">
+  <h1>{{ get.pages['categories'].titre }}</h1>
+  <h3>{{ get.pages['categories'].accroche }}</h3>
+</header>
+<section id="page">
+  <label for="liens" *ngIf="get.pages['categories']">{{ get.pages['categories'].contenu }}</label>
   <p>
   <select [(ngModel)]="catIndex" (change)="getCat()" name="liens" placeholder="Sélectionnez un lien à modifier">
     <option *ngFor="let c of get.categories; let i = index" [value]="i">{{ c.titre }}</option>
@@ -20,7 +22,20 @@
         placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
 
       <label for="description">Description</label>
-      <textarea [(ngModel)]="categorie.description" name="description"></textarea>
+      <!-- <textarea [(ngModel)]="categorie.description" name="description"></textarea> -->
+      <p-editor [(ngModel)]="categorie.description">
+        <!-- <ng-template pTemplate="header">
+          <span class="ql-format-group">
+              <span title="Bold" class="ql-format-button ql-bold"></span>
+              <span class="ql-format-separator"></span>
+              <span title="Italic" class="ql-format-button ql-italic"></span>
+              <span class="ql-format-separator"></span>
+              <span title="Underline" class="ql-format-button ql-underline"></span>
+              <span class="ql-format-separator"></span>
+              <span title="Insert Link" class="ql-format-button ql-link"></span>
+          </span>
+      </ng-template> -->
+      </p-editor>
 
       <label for="ordre">Ordre</label>
       <input [(ngModel)]="categorie.ordre" name="ordre" placeholder="0" type="number">
@@ -46,6 +61,3 @@
   </article>
 
 </section>
-<form>
-
-</form>

@@ -1,7 +1,7 @@
-<h1>{{ page.titre }}</h1>
-<h3>{{ page.accroche }}</h3>
-<p>{{ page.contenu }}</p>
-<section>
+<h1>{{ get.pages['menus'].titre }}</h1>
+<h3>{{ get.pages['menus'].accroche }}</h3>
+<p>{{ get.pages['menus'].contenu }}</p>
+<section id="page">
   <label for="menus">Sélectionnez un menu *</label>
   <select [(ngModel)]="menuIndex" (change)="initLien()" name="menus" placeholder="Sélectionnez un menu">
     <option *ngFor="let m of get.menus; let i = index" [value]="i">{{ m.titre }}</option>

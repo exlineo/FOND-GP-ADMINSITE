@@ -44,10 +44,9 @@ export interface MediaI {
 }
 export interface LienI {
   titre: string;
-  alias: string;
   url: string;
-  description: string;
-  cible: CiblesE
+  caption?: string;
+  cible?: string;
 }
 export interface MiseEnPageI {
   titre: string;
@@ -73,19 +72,19 @@ export interface CategorieI {
   titre: string;
   alias: string;
   description: string;
-  media: MediaI;
-  articles: Array<ArticleI>;
+  media?: MediaI;
+  articles: Array<{titre:string, alias:string}>;
   ordre?: number;
 }
 export interface ArticleI {
   titre: string;
   alias: string;
-  categories: Array<CategorieI>;
-  intro: string;
-  mediaIntro: MediaI;
-  contenu: string;
-  mediaContenu: MediaI;
-  liens: Array<LienI>;
+  categories?: Array<string>;
+  intro?: string;
+  mediaIntro?: MediaI;
+  contenu?: string;
+  mediaContenu?: MediaI;
+  liens?: Array<LienI>;
   ordre?: number;
 }
 export interface FormulaireI {

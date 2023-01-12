@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { GetService } from '../../systeme/services/get.service';
 
 @Component({
   selector: 'app-medias',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MediasComponent implements OnInit {
 
-  constructor() { }
+  constructor(public get:GetService) { }
 
   ngOnInit(): void {
   }

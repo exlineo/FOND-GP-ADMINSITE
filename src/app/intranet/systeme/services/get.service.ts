@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Firestore, collection, getDocs, doc, getDoc, setDoc, query, where, limit, orderBy } from "@angular/fire/firestore";
-import { CiblesE, LienMenuI, MenuI, CategorieI, StyleE, FormulaireI, TemplateE, LienMenu, PageI } from 'src/app/systeme/modeles/types-i';
+import { Firestore, collection, getDocs, doc, getDoc, setDoc, writeBatch, where, limit, orderBy } from "@angular/fire/firestore";
+import { Storage, listAll, ref, UploadTaskSnapshot, uploadBytes, getDownloadURL } from '@angular/fire/storage';
+import { LienMenuI, MenuI, CategorieI, FormulaireI, LienMenu, PageI, ArticleI, MediaI } from 'src/app/systeme/modeles/types-i';
 import { MsgService } from 'src/app/systeme/services/msg.service';
 
 @Injectable({
@@ -16,11 +17,16 @@ export class GetService {
 
   formulaires: Array<FormulaireI> = [];
   categories: Array<CategorieI> = [];
+  articles:Array<ArticleI> = [];
 
   pages: any = {};
   page: PageI = { titre: '', accroche: '', contenu: '' };
 
-  constructor(public dbf: Firestore, private msg:MsgService) {
+  medias:Array<MediaI> = [];
+
+  batch = writeBatch(this.dbf);
+
+  constructor(private readonly dbf: Firestore, private readonly store:Storage, public readonly msg:MsgService) {
     this.getFireCats(); // Récupérer la liste des collections
   }
 
@@ -37,7 +43,7 @@ export class GetService {
     await getDocs(collection(this.dbf, 'menus'))
       .then(m => {
         this.menus = [];
-        this.msg.msgOk('Menus chargés', 'Vous pourrez en éditer les liens.');
+        // this.msg.msgOk('Menus chargés', 'Vous pourrez en éditer les liens.');
         m.forEach(menu => this.menus.push(menu.data() as MenuI));
         console.log(this.menus)
       })
@@ -50,7 +56,7 @@ export class GetService {
     await getDocs(collection(this.dbf, 'pages'))
     .then(p => {
       p.forEach(c => {
-        this.msg.msgOk('Pages chargées', 'La liste des catégories a été chargée. On est carrément prêts.');
+        // this.msg.msgOk('Pages chargées', 'La liste des catégories a été chargée. On est carrément prêts.');
         this.pages[c.id] = c.data() as PageI;
       })
     })
@@ -58,6 +64,7 @@ export class GetService {
       this.msg.msgFail("Erreur dans le chargement des pages", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
       console.log(er);
     });
+    this.getMedias();
   }
   /** Récupérer les catégories
    * @param {string} collection Name of called collection
@@ -68,12 +75,33 @@ export class GetService {
     await getDocs(collection(this.dbf, 'categories'))
     .then(cat => {
       cat.forEach(c => {
-        this.msg.msgOk('Catégories chargées', 'La liste des catégories a été chargée. On est prêts.');
-        this.categories.push(c.data() as CategorieI);
+        let cat = c.data() as CategorieI;
+        // this.msg.msgOk('Catégories chargées', 'La liste des catégories a été chargée. On est prêts.');
+        this.categories.push(cat);
       })
     })
     .catch(er => {
       this.msg.msgFail("Erreur dans le chargement des catégories", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
+      console.log(er);
+    });
+    this.getFireArticles();
+  }
+  /** Récupérer les catégories
+   * @param {string} collection Name of called collection
+   * @param {string} param Searched object
+   * @returns {promise} Send back object
+   */
+   async getFireArticles() {
+    await getDocs(collection(this.dbf, 'articles'))
+    .then(art => {
+      art.forEach(c => {
+        let a = c.data() as ArticleI;
+        // this.msg.msgOk('Catégories chargées', 'La liste des catégories a été chargée. On est prêts.');
+        this.articles.push(a);
+      })
+    })
+    .catch(er => {
+      this.msg.msgFail("Erreur dans le chargement des articles", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
       console.log(er);
     });
     this.getFirePages();
@@ -97,5 +125,58 @@ export class GetService {
   async setFireDoc(collec: string, data: { uid: string, doc: any }) {
     const customDoc = doc(this.dbf, collec, data.uid);
     return await setDoc(customDoc, JSON.parse(JSON.stringify(data.doc)), { merge: true }); // Mettre à jour un objet existant
+  }
+  /** Récupérer la liste des médias */
+  async getMedias(){
+    await getDocs(collection(this.dbf, 'medias'))
+    .then(cat => {
+      cat.forEach(c => {
+        // this.msg.msgOk('Liste des médias chargée', 'Vous les retrouverez dans la page médias.');
+        this.medias.push(c.data() as MediaI);
+      })
+    })
+    .catch(er => {
+      this.msg.msgFail("Erreur dans le chargement des catégories", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
+      console.log(er);
+    });
+  }
+  /** Lister les objets stockés */
+  async getStorage(){
+    const listRef = ref(this.store);
+    await listAll(listRef)
+    .then(docs => {
+      docs.prefixes.forEach(dossier => console.log(dossier));
+      docs.items.forEach(item => console.log(item));
+    })
+  };
+  /** Téléverser un fichier */
+  async televerse(file:File, media:MediaI){
+    console.log(file);
+    const telRef = ref(this.store, file.name);
+    await uploadBytes(telRef, file)
+    .then(r => {
+      console.log(r);
+      // Récupérer l'url uploadée pour ajouter le média à la base de données des médias
+      getDownloadURL(r.ref).then(
+        r => {
+          console.log(r);
+          media.url = r;
+          this.setFireDoc('medias', { uid: file.name, doc: media })
+          .then(r => this.msg.msgOk("Image ajoutée", `Ouff, l'image `))
+          .catch(er => {
+            console.log(er);
+            this.msg.msgFail("Erreur sur les données", `Le fichier a été téléversé mais pas les données en lien, merci de réessayer : (erreur : ${er})`);
+          })
+        }
+      )
+      .catch(er => {
+        console.log(er);
+        this.msg.msgFail("Erreur dans l'enregistrement du fichier", `L'URL du fichier n'a pas pu être récupérée, gurps : (erreur : ${er})`);
+      })
+      })
+    .catch(er => {
+      console.log(er);
+      this.msg.msgFail("Erreur dans le téléversement", `Le fichier ne s'est pas bien téléverser. Voici l'erreur constatée : (erreur : ${er})`);
+    });
   }
 }

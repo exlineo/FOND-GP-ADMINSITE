@@ -1,1 +1,6 @@
-<p>medias works!</p>
+<h1>{{ get.pages['medias'].titre }}</h1>
+<h3>{{ get.pages['medias'].accroche }}</h3>
+<section id="page">
+  <label for="liens">{{ get.pages['medias'].contenu }}</label>
+</section>
+<app-liste-medias [edition]="true"></app-liste-medias>

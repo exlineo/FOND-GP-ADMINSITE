@@ -5,6 +5,8 @@ import {InputTextModule} from 'primeng/inputtext';
 import {ListboxModule} from 'primeng/listbox';
 import {MessageService} from 'primeng/api';
 import {ToastModule} from 'primeng/toast';
+import {EditorModule} from 'primeng/editor';
+
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
@@ -17,14 +19,16 @@ import { FormsModule } from '@angular/forms';
     FormsModule,
     InputTextModule,
     ListboxModule,
-    ToastModule
+    ToastModule,
+    EditorModule
   ],
   exports:[
     HttpClientModule,
     FormsModule,
     InputTextModule,
     ListboxModule,
-    ToastModule
+    ToastModule,
+    EditorModule
   ],
   providers:[MessageService]
 })
