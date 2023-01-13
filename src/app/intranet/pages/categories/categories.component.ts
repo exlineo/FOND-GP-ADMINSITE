@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Categorie, CategorieI, PageI } from 'src/app/systeme/modeles/types-i';
+import { Categorie, CategorieI, MediaI, PageI } from 'src/app/systeme/modeles/types-i';
 import { GetService } from '../../systeme/services/get.service';
 
 @Component({
@@ -10,7 +10,8 @@ import { GetService } from '../../systeme/services/get.service';
 export class CategoriesComponent implements OnInit {
 
   categorie: CategorieI = new Categorie();
-  catIndex: number = -1;
+  index: number = -1;
+  media?:string;
 
   constructor(public get: GetService) { }
 
@@ -32,11 +33,27 @@ export class CategoriesComponent implements OnInit {
       console.log(er)});
   }
   /** Récupérer une catégorie */
-  getCat(){
-    this.categorie = this.get.categories[this.catIndex];
+  getCat(i:number){
+    this.index = i;
+    this.categorie = this.get.categories[i];
   }
   /** Supprimer la catégorie */
   supprCat(){
-
+    this.get.fireSuppr('categories', this.get.categories[this.index].alias);
+  }
+  /** Retour de l'image choisie */
+  imageChoisie(med:MediaI){
+    console.log(med);
+    this.categorie.media = med;
+    this.media = undefined;
+  }
+  /** Ajouter une image */
+  editImage(target:string){
+    this.media = target;
+  }
+  /** Supprimer les images */
+  deleteImage(target:string){
+    const tmp:MediaI = {titre:'', url:'', caption:''};
+    this.categorie.media = tmp;
   }
 }

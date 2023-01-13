@@ -26,7 +26,7 @@ export class ArticlesComponent implements OnInit {
   }
   getArticle(index:number){
     this.index = index;
-    this.article = {...this.get.articles[index]};
+    this.article = this.get.articles[index];
   }
   /** Crée catégorie */
   setArticle(){

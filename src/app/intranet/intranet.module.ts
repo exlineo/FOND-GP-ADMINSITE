@@ -11,6 +11,7 @@ import { CollectionsComponent } from './pages/collections/collections.component'
 import { MediasComponent } from './pages/medias/medias.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ListeMediasComponent } from './pages/liste-medias/liste-medias.component';
+import { InfosComponent } from './pages/infos/infos.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { ListeMediasComponent } from './pages/liste-medias/liste-medias.componen
     FormulairesComponent,
     CollectionsComponent,
     MediasComponent,
-    ListeMediasComponent
+    ListeMediasComponent,
+    InfosComponent
   ],
   imports: [
     CommonModule,

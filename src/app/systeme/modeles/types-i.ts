@@ -59,13 +59,13 @@ export interface LienMenuI {
   url: string;
   description?: string;
   cible?: CiblesE;
-  rattachement: string;
+  menus: Array<string>;
   parent?: string;
   template?: TemplateE;
   formulaire?: FormulaireI;
   style?: StyleE;
-  categorie: CategorieI;
-  articles: Array<ArticleI>;
+  categories?: Array<CategorieI>;
+  articles?: Array<ArticleI>;
   ordre?: number;
 }
 export interface CategorieI {
@@ -120,12 +120,12 @@ export class LienMenu implements LienMenuI {
   url = "";
   description = "";
   cible = CiblesE.self;
-  rattachement = "";
+  menus = [];
   parent = "";
   template = TemplateE.blog;
   formulaire = <FormulaireI>{};
   style = <StyleE>{};
-  categorie = <CategorieI>{};
+  categories = [];
   articles = [];
   ordre = 0
 }

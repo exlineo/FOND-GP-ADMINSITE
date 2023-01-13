@@ -1,63 +1,53 @@
-<header *ngIf="get.pages['categories']">
-  <h1>{{ get.pages['categories'].titre }}</h1>
-  <h3>{{ get.pages['categories'].accroche }}</h3>
-</header>
+<aside>
+  <div *ngIf="get.pages.articles">
+    <h1>{{ get.pages['categories'].titre }}</h1>
+    <h3>{{ get.pages['categories'].accroche }}</h3>
+    <button (click)="initCat()">Créer une catégorie d'articles</button>
+    <p>Sinon...</p>
+    <p>{{ get.pages['categories'].contenu }}</p>
+  </div>
+  <ul>
+    <li *ngFor="let m of get.categories let i = index" (click)="getCat(i)">{{ m.titre }}</li>
+  </ul>
+</aside>
 <section id="page">
-  <label for="liens" *ngIf="get.pages['categories']">{{ get.pages['categories'].contenu }}</label>
-  <p>
-  <select [(ngModel)]="catIndex" (change)="getCat()" name="liens" placeholder="Sélectionnez un lien à modifier">
-    <option *ngFor="let c of get.categories; let i = index" [value]="i">{{ c.titre }}</option>
-  </select>
-  <button (click)="initCat()">ou créez une nouvelle catégorie</button>
-</p>
-  <hr>
-  <article>
-    <h2 *ngIf="catIndex > -1">Catégorie éditée : {{ categorie.titre }}</h2>
-    <div>
-      <label for="titre">Titre *</label>
-      <input [(ngModel)]="categorie.titre" name="titre" placeholder="Titre" required>
+  <form>
+    <h2 *ngIf="index > -1">Catégorie éditée : <strong><em>{{ categorie.titre }}</em></strong></h2>
+    <article>
+      <div>
+        <label for="titre">Titre *</label>
+        <input [(ngModel)]="categorie.titre" name="titre" placeholder="Titre" required>
 
-      <label for="alias">Alias *</label>
-      <input [(ngModel)]="categorie.alias" name="alias"
-        placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
+        <label for="alias">Alias *</label>
+        <input [(ngModel)]="categorie.alias" name="alias"
+          placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
 
-      <label for="description">Description</label>
-      <!-- <textarea [(ngModel)]="categorie.description" name="description"></textarea> -->
-      <p-editor [(ngModel)]="categorie.description">
-        <!-- <ng-template pTemplate="header">
-          <span class="ql-format-group">
-              <span title="Bold" class="ql-format-button ql-bold"></span>
-              <span class="ql-format-separator"></span>
-              <span title="Italic" class="ql-format-button ql-italic"></span>
-              <span class="ql-format-separator"></span>
-              <span title="Underline" class="ql-format-button ql-underline"></span>
-              <span class="ql-format-separator"></span>
-              <span title="Insert Link" class="ql-format-button ql-link"></span>
-          </span>
-      </ng-template> -->
-      </p-editor>
+        <label for="media">Média</label>
+        <div class="vignettes">
+          <img [src]="categorie.media!.url" [alt]="categorie.media!.caption" class="vignette"
+            *ngIf="categorie.media!.url">
+          <button (click)="deleteImage('media')" class="annule"><i class="pi pi-trash"></i></button>
+          <button (click)="editImage('media')" class="valid"><i class="pi pi-images"></i></button>
+        </div>
 
-      <label for="ordre">Ordre</label>
-      <input [(ngModel)]="categorie.ordre" name="ordre" placeholder="0" type="number">
+        <label for="description">Description</label>
+        <p-editor name="description" [(ngModel)]="categorie.description" [style]="{'height':'250px'}">
+        </p-editor>
 
-      <label>Articles liés</label>
-      <ul>
-        <li *ngFor="let a of categorie.articles">{{ a.titre }}</li>
-      </ul>
-    </div>
-
-    <div>
-      <label for="categorie">Choisissez un média</label>
-      <figure>
-
-      </figure>
-    </div>
-
-  </article>
-  <article>
-    <button *ngIf="catIndex > -1" (click)="supprCat()" class="suppr">Suprimer</button>
-    <button (click)="initCat()" class="annule">Annuler</button>
-    <button (click)="setCat()" class="valide">Enregistrer</button>
-  </article>
-
+        <label for="ordre">Ordre</label>
+        <input [(ngModel)]="categorie.ordre" name="ordre" placeholder="0" type="number">
+      </div>
+    </article>
+    <article>
+      <button *ngIf="index > -1" (click)="supprCat()" class="suppr">Suprimer</button>
+      <button (click)="initCat()" class="annule">Annuler</button>
+      <button (click)="setCat()" class="valide">Enregistrer</button>
+    </article>
+  </form>
+</section>
+<!-- AFFICHER LA LISTE DES MEDIAS -->
+<section [class.arrive]="media" id="medias">
+  <h2>Liste des médias disponibles</h2>
+  <a class="close" (click)="media = undefined"></a>
+  <app-liste-medias [target]="media" (choix)="imageChoisie($event)"></app-liste-medias>
 </section>

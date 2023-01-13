@@ -9,26 +9,37 @@ import { GetService } from '../../systeme/services/get.service';
 })
 export class MenusComponent implements OnInit {
 
-  menuIndex:number = -1;
-  lienIndex:number = -1;
+  lienBool = false;
+  index = -1;
   lienMenu:LienMenuI = new LienMenu();
+  liensMenu:Array<LienMenuI> = [];
 
   constructor(public get:GetService) { }
 
   ngOnInit(): void {
     if(this.get.menus.length == 0) this.get.getFireMenus();
   }
-
-  // Reset du lien de menu
-  initLien(){
-    this.get.lienMenu = new LienMenu();
+  init(){
+    this.lienMenu = new LienMenu();
+    this.lienBool = false;
   }
-  /** Enregistrer le nouveau lien */
-  enregistreLien(){
-
+  /** Récupérer les lien du menu */
+  setLien(i:number){
+    this.lienMenu = this.liensMenu[i];
+    this.index = i;
+    this.lienBool = true;
   }
-  /** Le menu sélectionné */
-  setMenu(ev:any){
-    if(this.menuIndex && this.get.menus.length == 0) this.get.menus[this.menuIndex].liens.push(this.lienMenu);
+  /** Créer un lien */
+  creeLien(){
+    this.lienMenu = new LienMenu();
+    this.lienBool = true;
+  }
+  /** Ajouter un lien de menu */
+  fireLien(){
+    this.get.setFireDoc('liens', {uid:this.lienMenu.alias, doc:this.lienMenu})
+  };
+  /** Supprimer un lien existant */
+  supprLien(){
+    this.get.fireSuppr('liens', this.lienMenu.alias);
   }
 }

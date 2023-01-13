@@ -6,11 +6,13 @@ import { ArticlesComponent } from './pages/articles/articles.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { CollectionsComponent } from './pages/collections/collections.component';
 import { FormulairesComponent } from './pages/formulaires/formulaires.component';
+import { InfosComponent } from './pages/infos/infos.component';
 import { MediasComponent } from './pages/medias/medias.component';
 import { MenusComponent } from './pages/menus/menus.component';
 
 const routes: Routes = [
   { path:'', component:AccueilComponent, children:[
+    { path:'', component:InfosComponent },
     { path:'menus', component:MenusComponent },
     { path:'categories', component:CategoriesComponent },
     { path:'articles', component:ArticlesComponent },

@@ -1,0 +1,19 @@
+:host{
+  display:flex;
+  flex-flow:row nowrap;
+  height:100vh;
+}
+aside{
+  width:250px;
+  padding:15px;
+  height:100vh;
+}
+#page{
+  width:calc(100% - 250px);
+  padding-left:20px;
+  overflow:hidden;
+  overflow-y:auto;
+}
+#page > form > article:nth-child(1){
+  flex-flow:row nowrap;
+}
