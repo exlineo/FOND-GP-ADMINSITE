@@ -6,6 +6,7 @@
 aside{
   width:250px;
   padding:15px;
+  overflow-y: auto;
 }
 #page{
   width:calc(100% - 250px);

@@ -6,8 +6,11 @@
     <p>Sinon...</p>
     <p>{{ get.pages['articles'].contenu }}</p>
   </div>
+  <div class="h"><i class="pi pi-search"></i>
+    <input type="search" [(ngModel)]="filtreArticle" name="filtre" placeholder="Filtrer les articles">
+  </div>
   <ul>
-    <li *ngFor="let m of get.articles; let i = index" (click)="getArticle(i)">{{ m.titre }} <span
+    <li *ngFor="let m of get.articles | articles:filtreArticle; let i = index" (click)="getArticle(i)">{{ m.titre }} <span
         *ngIf="m.categories">({{ m.categories.toString() }})</span></li>
   </ul>
 </aside>
@@ -26,9 +29,10 @@
         placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
 
       <label for="categories">Ajouter des catégories à l'article, ces catégories seront liées à des menus</label>
-      <input type="search" [(ngModel)]="filtre" name="filtre">
+      <div class="h"><i class="pi pi-search"></i><input type="search" [(ngModel)]="filtreCat" name="filtre" placeholder="Filtrer les catégories"></div>
+
       <select [(ngModel)]="article.categories" name="categories" multiple>
-        <option *ngFor="let c of get.categories | cats:filtre; let i = index" [value]="c.alias"> {{c.titre}}</option>
+        <option *ngFor="let c of get.categories | cats:filtreCat; let i = index" [value]="c.alias"> {{c.titre}}</option>
       </select>
 
       <label for="intro">Intro</label>
@@ -85,7 +89,7 @@
       <article class="boutons">
         <button *ngIf="index != -1" (click)="supprArticle()" [disabled]="!f.valid" class="suppr">Supprimer</button>
         <button (click)="initArticle()" class="annule">Annuler</button>
-        <button (click)="setArticle()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouvel
+        <button (click)="addArticle()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouvel
           article</button>
         <button (click)="setArticle()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">Enregistrer les mises
           à jours</button>

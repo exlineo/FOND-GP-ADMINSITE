@@ -37,3 +37,6 @@ form > article > div > div{
   z-index:10;
   display: none;
 }
+aside{
+  overflow-y: auto;
+}

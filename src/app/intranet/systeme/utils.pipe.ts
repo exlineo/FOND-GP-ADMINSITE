@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { CategorieI } from 'src/app/systeme/modeles/types-i';
+import { ArticleI, CategorieI } from 'src/app/systeme/modeles/types-i';
 
 @Pipe({
   name: 'utils'
@@ -22,6 +22,19 @@ export class CatsPipe implements PipeTransform {
     if(!str || str.length < 3) return value;
 
     return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1);
+  }
+
+}
+/** Filter les catégories */
+@Pipe({
+  name: 'articles'
+})
+export class ArticlesPipe implements PipeTransform {
+
+  transform(value:Array<ArticleI>, str:string): Array<ArticleI> {
+    if(!value) return [];
+    if(!str || str.length < 3) return value;
+    return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 && f.alias.toLowerCase().indexOf(str.toLowerCase()));
   }
 
 }

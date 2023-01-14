@@ -184,6 +184,11 @@ i{
   margin:5px;
   cursor: pointer;
 }
+i.search{
+  margin-top: -30px;
+  padding-left: 5px;
+  padding-bottom: 5px;
+}
 hr{
   border:0;
   border-bottom: 1px solid var(--jaunea);
@@ -293,6 +298,14 @@ app-liste-medias aside, app-liste-medias form {
   left: 350px !important;
   width: calc(100vw - 350px);
 }
+.h{
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+}
+.v{
+  flex-flow: column nowrap;
+}
 .boutons{
   justify-content: center;
 }
@@ -360,4 +373,21 @@ app-liste-medias aside, app-liste-medias form {
 }
 .lightbox form{
   flex-flow: column nowrap;
+}
+/* SCROLL */
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: var(--jaune);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: var(--orange);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--vertsombre);
 }
