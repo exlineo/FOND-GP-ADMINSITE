@@ -22,6 +22,7 @@ export class MenusComponent implements OnInit {
   init(){
     this.lienMenu = new LienMenu();
     this.lienBool = false;
+    this.index = -1;
   }
   /** Récupérer les lien du menu */
   setLien(i:number){

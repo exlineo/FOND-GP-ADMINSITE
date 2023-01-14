@@ -6,25 +6,44 @@
       <img [src]="a.url" alt="a.caption">
       <figcaption>{{ a.caption }}</figcaption>
     </figure>
-    <p class="edition" *ngIf="edition">
-      <i class="pi pi-file-edit"></i>
-      <i class="pi pi-trash"></i>
+    <p class="edition">
+      <i class="pi pi-pencil" (click)="setEdit(i)"></i>
+      <i class="pi pi-trash" (click)="setSuppr(i)"></i>
     </p>
     <!-- <img [src]="a.url" alt="a.caption"> -->
   </article>
 </section>
 <aside>
   <h2>Téléverser un fichier</h2>
-  <div>
-    <input type="file" (change)="setFile($event)" name="fichier"
-      accept=".rtf, .txt, .pdf, .gif, .webp, .jpeg, .png, .jpg">
-    <form (submit)="televerseMedia()">
-      <input name="titre" [(ngModel)]="mediaForm.titre" placeholder="Titre du document">
-      <input name="caption" [(ngModel)]="mediaForm.caption" placeholder="Légende ou description">
+  <input type="file" (change)="setFile($event)" name="fichier"
+    accept=".rtf, .txt, .pdf, .gif, .webp, .jpeg, .png, .jpg">
+  <form (submit)="televerseMedia()">
+    <input name="titre" [(ngModel)]="mediaForm.titre" placeholder="Titre du document">
+    <input name="caption" [(ngModel)]="mediaForm.caption" placeholder="Légende ou description">
+    <input type="reset" value="Annuler">
+    <input type="submit" value="Enregistrer">
+  </form>
+</aside>
+<section *ngIf="delBool" class="lightbox">
+  <a class="close" (click)="delBool = false; index = -1"></a>
+  <article>
+    <h3>Vous êtes vraiment sûr de vouloir le supprimer hein ? C'est irréversible.</h3>
+    <button (click)="delBool = false; index = -1" class="annule">J'ai changé d'avis</button>
+    <button class="valid" (click)="supprMedia()">Supprimer</button>
+  </article>
+</section>
+<section *ngIf="editBool" class="lightbox">
+  <a class="close" (click)="initEdit()"></a>
+  <article>
+    <form (submit)="editMedia()">
+      <h3>Modifier les données du média</h3>
+      <input name="editTitre" [(ngModel)]="get.medias[index].titre">
+      <input name="editCaption" [(ngModel)]="get.medias[index].caption">
       <div>
-        <input type="reset" value="Annuler">
-        <input type="submit" value="Enregistrer">
+        <input type="reset" value="Annuler" (click)="initEdit()">
+        <input type="submit" value="Enregistrer les modifications">
       </div>
     </form>
-  </div>
-</aside>
+  </article>
+
+</section>

@@ -14,6 +14,7 @@ export class ArticlesComponent implements OnInit {
   lien:LienI = { titre:'', url:'', caption:'', cible:'_self'};
   lienBool:boolean = false; // Afficher l'ajout d'un lien
   imgTarget?:string; // Quelle image est entrain d'être éditée
+  filtre:string = ''; // Filtrer les catégories
 
   constructor(public get:GetService) { }
 
@@ -71,7 +72,9 @@ export class ArticlesComponent implements OnInit {
   }
   /** Supprimer la catégorie */
   supprArticle(){
-
+    this.get.fireSuppr('articles', this.get.articles[this.index].alias!);
+    this.get.articles.splice(this.index, 1);
+    this.initArticle();
   }
   /** Ajouter une image */
   editImage(target:string){

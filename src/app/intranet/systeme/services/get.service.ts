@@ -195,8 +195,12 @@ export class GetService {
           r => {
             console.log(r);
             media.url = r;
+            media.id = file.name;
             this.setFireDoc('medias', { uid: file.name, doc: media })
-              .then(r => this.msg.msgOk("Image ajoutée", `Ouff, l'image `))
+              .then(r => {
+                this.medias.push(media);
+                this.msg.msgOk("Image ajoutée", `Génial, l'image a été ajoutée`);
+              })
               .catch(er => {
                 console.log(er);
                 this.msg.msgFail("Erreur sur les données", `Le fichier a été téléversé mais pas les données en lien, merci de réessayer : (erreur : ${er})`);

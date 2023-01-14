@@ -41,7 +41,8 @@
     <article>
       <button *ngIf="index > -1" (click)="supprCat()" class="suppr">Suprimer</button>
       <button (click)="initCat()" class="annule">Annuler</button>
-      <button (click)="setCat()" class="valide">Enregistrer</button>
+      <button (click)="addCat()" class="valide" *ngIf="this.index == -1">Ajouter la catégorie</button>
+      <button (click)="editCat()" class="valide" *ngIf="this.index > -1">Mettre à jour la catégorie</button>
     </article>
   </form>
 </section>

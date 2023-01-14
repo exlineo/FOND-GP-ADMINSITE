@@ -38,6 +38,7 @@ export interface PageI{
   contenu?:string;
 }
 export interface MediaI {
+  id?:string;
   titre?: string;
   url: string;
   caption?: string;

@@ -20,13 +20,27 @@ export class CategoriesComponent implements OnInit {
   /** Réinitialiser la catégorie */
   initCat() {
     this.categorie = new Categorie();
+    this.index = -1;
   }
   /** Crée catégorie */
-  setCat(){
+  addCat(){
     this.get.setFireDoc('categories', {uid:this.categorie.alias, doc:this.categorie})
     .then(r => {
-      this.get.categories.push(this.categorie);
-      this.get.msg.msgOk('Catégorie ajoutée', 'Cool, votre nouvelle catégorie a été ajoutée.')
+      if(!this.get.categories.includes(this.categorie)) this.get.categories.push(this.categorie);
+      this.get.msg.msgOk('Catégorie ajoutée', 'Cool, votre nouvelle catégorie a été ajoutée.');
+      this.initCat();
+    })
+    .catch(er => {
+      this.get.msg.msgFail('Aïe, erreur !', er)
+      console.log(er)});
+  }
+  /** Mettre à jour une catégorie */
+  editCat(){
+    this.get.setFireDoc('categories', {uid:this.categorie.alias, doc:this.categorie})
+    .then(r => {
+      this.get.categories[this.index] = this.categorie;
+      this.get.msg.msgOk('Catégorie mise à jour', 'Fastoche, la mise à jour est faite.');
+      this.initCat();
     })
     .catch(er => {
       this.get.msg.msgFail('Aïe, erreur !', er)

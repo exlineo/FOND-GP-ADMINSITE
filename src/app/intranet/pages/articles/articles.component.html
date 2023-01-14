@@ -26,8 +26,9 @@
         placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
 
       <label for="categories">Ajouter des catégories à l'article, ces catégories seront liées à des menus</label>
+      <input type="search" [(ngModel)]="filtre" name="filtre">
       <select [(ngModel)]="article.categories" name="categories" multiple>
-        <option *ngFor="let c of get.categories; let i = index" [value]="c.alias"> {{c.titre}}</option>
+        <option *ngFor="let c of get.categories | cats:filtre; let i = index" [value]="c.alias"> {{c.titre}}</option>
       </select>
 
       <label for="intro">Intro</label>
