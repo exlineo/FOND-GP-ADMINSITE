@@ -45,7 +45,6 @@ export class GetService {
         // this.msg.msgOk('Menus chargés', 'Vous pourrez en éditer les liens.');
         m.forEach(menu => this.menus.push(menu.data() as MenuI));
         this.getFireLiens();
-        console.log(this.menus)
       })
       .catch(er => {
         this.msg.msgFail("Erreur dans le chargement des menus", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
@@ -59,7 +58,6 @@ export class GetService {
         this.liensMenus = [];
         // this.msg.msgOk('Menus chargés', 'Vous pourrez en éditer les liens.');
         m.forEach(lien => this.liensMenus.push(lien.data() as LienMenuI));
-        console.log(this.liensMenus);
       })
       .catch(er => {
         this.msg.msgFail("Erreur dans le chargement des menus", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
@@ -99,7 +97,6 @@ export class GetService {
           this.categories.push(c.data() as CategorieI);
           this.getFireArticles();
         })
-        console.log('categories', this.categories);
       })
       .catch(er => {
         this.msg.msgFail("Erreur dans le chargement des catégories", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
@@ -158,7 +155,6 @@ export class GetService {
       })
       .catch(er => {
         this.msg.msgFail("Erreur dans le chargement des catégories", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
-        console.log(er);
       });
   }
   /** Lister les objets stockés */
@@ -175,7 +171,6 @@ export class GetService {
     const customDoc = doc(this.dbf, collec, uid);
     deleteDoc(customDoc)
       .then(r => {
-        console.log("Données supprimées avec succès");
         this.msg.msgOk("Suppression réussie", `Les données ont été supprimées de la base de données`)
       })
       .catch(er => {

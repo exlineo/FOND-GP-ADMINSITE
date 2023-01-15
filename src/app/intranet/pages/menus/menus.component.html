@@ -6,15 +6,18 @@
     <p>Sinon...</p>
     <p>{{ get.pages['menus'].contenu }}</p>
   </div>
+  <div class="h"><i class="pi pi-search"></i>
+    <input type="search" [(ngModel)]="filtreLiens" name="filtre" placeholder="Filtrer les liens">
+  </div>
   <ul>
-    <li *ngFor="let m of get.liensMenus; let i = index" (click)="setLien(i)">
-      {{ m.titre }} <span
-        *ngIf="m.menus">({{ m.menus.toString() }})</span></li>
+    <li *ngFor="let m of get.liensMenus | liens:filtreLiens; let i = index" (click)="upLien(i)">
+      {{ m.titre }} <span *ngIf="m.menus">({{ m.menus.toString() }})</span></li>
   </ul>
 </aside>
 <section id="page">
-  <h2 *ngIf="lienBool">Vous éditez le lien <strong><em>{{ lienMenu.titre }}</em></strong></h2>
-  <form #f="ngForm" *ngIf="lienBool">
+  <h2 *ngIf="index == -1">Vous créez un nouveau lien : <strong><em>{{ lienMenu.titre }}</em></strong></h2>
+  <h2 *ngIf="index > -1">Vous éditez le lien <strong><em>{{ lienMenu.titre }}</em></strong></h2>
+  <form #f="ngForm">
     <article>
       <div>
         <h3>1 - Informations à renseigner</h3>
@@ -43,50 +46,67 @@
           <label for="self">Lien à l'intérieur du site</label>
         </p>
       </div>
-
       <div>
         <h3>2 - Compotements à choisir</h3>
-        <p>Choisissez l'une des options ci-dessous pour déterminer le fonctionnement du lien</p>
+        <p>Choisissez l'UNE des options ci-dessous pour déterminer le contenu contenu dans la page vers laquelle le lien renverra.</p>
 
-        <label for="articles">Afficher les articles d'une ou plusieurs catégories (choisissez en une ou plusieurs dans
-          la liste (CTRL+Click))</label>
+        <label for="categories">Catégorie(s)</label>
+        <p>Afficher les articles d'une ou plusieurs catégories (choisissez en une ou plusieurs dans
+            la liste (CTRL+Click))</p>
         <select [(ngModel)]="lienMenu.categories" name="categories" multiple>
+          <option value="">Aucune en particuier</option>
           <option *ngFor="let c of get.categories; let i = index" [value]="c.alias">{{ c.titre }}</option>
         </select>
 
-        <label for="formulaire">Renvoyer vers un formulaire (choisissez en un dans la liste)</label>
+        <label for="articles">Article(s)</label>
+        <p>Choisissez un ou plusieurs articles (CTRL+Click)</p>
+        <select [(ngModel)]="lienMenu.articles" name="articles" multiple>
+          <option value="">Aucun en particuier</option>
+          <option *ngFor="let c of get.articles; let i = index" [value]="c.alias">{{ c.titre }}</option>
+        </select>
+
+        <label for="formulaire">Formulaire</label>
+        <p>Renvoyer vers un formulaire (choisissez en un dans la liste)</p>
         <select [(ngModel)]="lienMenu.formulaire" name="formulaire">
+          <option value="">Aucun en particuier</option>
           <option *ngFor="let f of get.formulaires; let i = index" [value]="f.alias">{{f.titre}}</option>
         </select>
       </div>
       <div>
-        <h3>3 - Options (obligatoires ou non)</h3>
+        <h3>3 - Options structurelles (obligatoires ou non)</h3>
         <p>Connectez votre lien au système : gabarits, styles, menus.</p>
 
-        <label for="menus">A quel(s) menu(s) le lien appartient-il ? *</label>
+        <label for="menus">Menus(s)*</label>
+        <p>A quel(s) menu(s) le lien appartient-il ?</p>
         <select [(ngModel)]="lienMenu.menus" name="menus" multiple required>
           <option *ngFor="let m of get.menus; let i = index" [value]="m.alias">{{ m.titre }}</option>
         </select>
 
-        <label for="template">Structure de la page de destination</label>
-        <select [(ngModel)]="lienMenu.template" name="template">
-          <option value="blog">Blog</option>
+        <label for="parent">Parent</label>
+        <p>Choisir un lien pour placer celui-ci en dessous dans la hiérarchie (choisissez un lien du même menu...)</p>
+        <select [(ngModel)]="lienMenu.parent" name="parent">
+          <option value="">Aucun en particuier</option>
+          <option *ngFor="let p of get.liensMenus; let i = index" [value]="p.alias">{{ p.titre }} ({{ p.menus.toString() }})</option>
         </select>
 
-        <label for="style">Style graphique de la page de destination</label>
+        <label for="template">Template</label>
+        <p>Structure de la page de destination.</p>
+        <select [(ngModel)]="lienMenu.template" name="template">
+          <option *ngFor="let t of utils.templates" [value]="t.alias">{{ t.titre }}</option>
+        </select>
+
+        <label for="style">Style</label>
+        <p>Style graphique de la page de destination.</p>
         <select [(ngModel)]="lienMenu.style" name="style">
-          <option value="blog">Blog</option>
-          <option value="equipe">Equipe</option>
+          <option *ngFor="let s of utils.styles" [value]="s.alias">{{ s.titre }}</option>
         </select>
       </div>
     </article>
     <article class="boutons">
       <button *ngIf="index != -1" (click)="supprLien()" [disabled]="!f.valid" class="suppr">Supprimer</button>
       <button (click)="init()" class="annule">Annuler</button>
-      <button (click)="fireLien()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouvel
-        article</button>
-      <button (click)="fireLien()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">Enregistrer les mises
-        à jours</button>
+      <button (click)="creeFireLien()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouveau lien</button>
+      <button (click)="upFireLien()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">Mettre à jour le lien</button>
     </article>
   </form>
 </section>

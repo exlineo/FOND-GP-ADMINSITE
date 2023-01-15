@@ -7,7 +7,9 @@ aside{
   width:250px;
   padding:15px;
   height:100vh;
+  overflow-y: auto;
 }
+
 #page{
   width:calc(100% - 250px);
   padding-left:20px;
