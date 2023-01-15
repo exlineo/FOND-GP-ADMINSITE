@@ -100,8 +100,8 @@ export interface FormulaireI {
 export interface ChampI {
   titre: string;
   alias: string;
-  infos: string;
-  aide: string;
+  infos?: string;
+  aide?: string;
   type: ChampE;
   required?: boolean;
   options?: string;
@@ -156,4 +156,22 @@ export class Categorie implements CategorieI{
   media = <MediaI>{};
   articles = [];
   ordre = 0;
+}
+export class Formulaire implements FormulaireI {
+  titre = '';
+  alias = '';
+  description = '';
+  email = '';
+  destination = '';
+  champs = [];
+  ordre = 0;
+}
+export class Champ implements ChampI {
+  titre = '';
+  alias = '';
+  infos = '';
+  aide = '';
+  type = ChampE.input;
+  required = false;
+  options = '';
 }

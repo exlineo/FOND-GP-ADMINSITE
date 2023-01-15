@@ -75,6 +75,7 @@ export class GetService {
         p.forEach(c => {
           // this.msg.msgOk('Pages chargées', 'La liste des catégories a été chargée. On est carrément prêts.');
           this.pages[c.id] = c.data() as PageI;
+          this.getFireFormulaires();
         });
       })
       .catch(er => {
@@ -116,6 +117,25 @@ export class GetService {
           // this.msg.msgOk('Catégories chargées', 'La liste des catégories a été chargée. On est prêts.');
           this.articles.push(c.data() as ArticleI);
           this.getFirePages();
+        })
+      })
+      .catch(er => {
+        this.msg.msgFail("Erreur dans le chargement des articles", `Merci de rééssayer en rechargeant la page (touche F5) (erreur : ${er})`);
+        console.log(er);
+      });
+  }
+  /** Récupérer les catégories
+   * @param {string} collection Name of called collection
+   * @param {string} param Searched object
+   * @returns {promise} Send back object
+   */
+  async getFireFormulaires() {
+    await getDocs(collection(this.dbf, 'formulaires'))
+      .then(art => {
+        this.formulaires = [];
+        art.forEach(c => {
+          // this.msg.msgOk('Catégories chargées', 'La liste des catégories a été chargée. On est prêts.');
+          this.formulaires.push(c.data() as FormulaireI);
         })
       })
       .catch(er => {

@@ -247,12 +247,12 @@ app-connexion section {
 app-connexion div, app-connexion a {
   text-align: center;
 }
-app-liste-medias{
+app-liste-medias, app-formulaire{
   padding: 0 20px;
   display:flex;
   flex-flow: column nowrap;
 }
-app-liste-medias > section{
+app-liste-medias > section, app-formulaire > section{
   width: 100%;
   height:85%;
   flex-flow: row wrap;
@@ -290,7 +290,7 @@ app-liste-medias figcaption{
 app-liste-medias figure > img{
   width:100%;
 }
-app-liste-medias aside, app-liste-medias form {
+app-liste-medias aside {
   display:flex;
   flex-flow: row nowrap;
   margin: 0 10px;
