@@ -32,8 +32,8 @@ export class FormulairesComponent implements OnInit {
     this.formulaire = this.get.formulaires[index];
   }
   /** Crée catégorie */
-  setFormulaire(){
-    this.get.setFireDoc('articles', {uid:this.formulaire.alias, doc:this.formulaire})
+  upFormulaire(){
+    this.get.setFireDoc('formulaires', {uid:this.formulaire.alias, doc:this.formulaire})
     .then(r => {
       this.get.formulaires[this.index] = this.formulaire;
       this.get.msg.msgOk('Article mis à jour', "Tout s'est bien passé, les données sont à jour.");
@@ -46,9 +46,9 @@ export class FormulairesComponent implements OnInit {
   }
   /** Ajouter un nouvel article */
   addFormulaire(){
-    this.get.setFireDoc('articles', {uid:this.formulaire.alias, doc:this.formulaire})
+    this.get.setFireDoc('formulaires', {uid:this.formulaire.alias, doc:this.formulaire})
     .then(r => {
-      this.get.articles.push(this.formulaire);
+      this.get.formulaires.push(this.formulaire);
       this.get.msg.msgOk('Article a été ajouté', "Le nouvelle article est maintenant disponible.");
       this.initFormulaire();
     })
@@ -91,7 +91,7 @@ export class FormulairesComponent implements OnInit {
   }
   /** Supprimer la catégorie */
   supprFormulaire(){
-    this.get.fireSuppr('articles', this.get.articles[this.index].alias!);
+    this.get.fireSuppr('formulaires', this.get.formulaires[this.index].alias!);
     this.get.articles.splice(this.index, 1);
     this.initFormulaire();
   }

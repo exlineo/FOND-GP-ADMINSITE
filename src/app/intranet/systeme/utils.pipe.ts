@@ -36,9 +36,8 @@ export class ArticlesPipe implements PipeTransform {
     if(!str || str.length < 3) return value;
     return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 && f.alias.toLowerCase().indexOf(str.toLowerCase()));
   }
-
 }
-/** Filter les catégories */
+/** Filter les liens */
 @Pipe({
   name: 'liens'
 })
@@ -49,6 +48,15 @@ export class LiensPipe implements PipeTransform {
     if(!str || str.length < 3) return value;
     return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 && f.alias.toLowerCase().indexOf(str.toLowerCase()));
   }
-
 }
+/** Filter les catégories */
+@Pipe({
+  name: 'bool'
+})
+export class BoolPipe implements PipeTransform {
 
+  transform(bool:boolean): string {
+    if(bool) return 'oui';
+    return 'non';
+  }
+}

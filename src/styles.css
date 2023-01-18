@@ -65,6 +65,9 @@ form, form > div, form > article > div{
   flex-flow: column nowrap;
   margin:auto;
 }
+form > article > div > div{
+  flex-direction: row;
+}
 form p{
   font-size: 12px;
 }
@@ -298,6 +301,16 @@ app-liste-medias aside {
 }
 
 /* STYLE PARTICULIERS */
+.liste{
+  border-bottom: 1px solid var(--jaune);
+  margin:0;
+  padding:10px 0;
+  font-size:12px;
+}
+.liste li{
+  list-style: disc;
+  margin:3px 0;
+}
 .arrive {
   display: block !important;
   left: 350px !important;

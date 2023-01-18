@@ -22,9 +22,7 @@ aside{
   width:50%;
   padding-right:20px;
 }
-form > article > div > div{
-  flex-direction: row;
-}
+
 /* Afficher les médias */
 #medias{
   position: absolute;

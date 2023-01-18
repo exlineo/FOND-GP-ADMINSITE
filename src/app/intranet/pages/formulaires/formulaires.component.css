@@ -15,3 +15,16 @@ aside{
   overflow-y:auto;
   flex-flow:row nowrap;
 }
+form > article{
+  flex-flow: row nowrap;
+}
+form > article > div {
+  display:flex;
+  flex-flow:column nowrap;
+}
+form ul{
+  /* width:40%; */
+}
+.edition{
+  margin-bottom:-25px;
+}

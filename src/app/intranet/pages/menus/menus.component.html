@@ -71,6 +71,12 @@
           <option value="">Aucun en particuier</option>
           <option *ngFor="let f of get.formulaires; let i = index" [value]="f.alias">{{f.titre}}</option>
         </select>
+
+        <label for="menus">Sous menu dans la page</label>
+        <p>La page affichée par le lien renferme-t-elle un sous menu ? Si oui, sélectionnez en un dans la liste.</p>
+        <select [(ngModel)]="lienMenu.sousmenu" name="sousmenu">
+          <option *ngFor="let m of get.menus; let i = index" [value]="m.alias">{{ m.titre }}</option>
+        </select>
       </div>
       <div>
         <h3>3 - Options structurelles (obligatoires ou non)</h3>

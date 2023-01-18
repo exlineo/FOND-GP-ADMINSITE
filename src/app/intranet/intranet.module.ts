@@ -12,7 +12,7 @@ import { MediasComponent } from './pages/medias/medias.component';
 import { CategoriesComponent } from './pages/categories/categories.component';
 import { ListeMediasComponent } from './pages/liste-medias/liste-medias.component';
 import { InfosComponent } from './pages/infos/infos.component';
-import { CatsPipe, ArticlesPipe, LiensPipe } from './systeme/utils.pipe';
+import { CatsPipe, ArticlesPipe, LiensPipe, BoolPipe } from './systeme/utils.pipe';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,8 @@ import { CatsPipe, ArticlesPipe, LiensPipe } from './systeme/utils.pipe';
     InfosComponent,
     CatsPipe,
     ArticlesPipe,
-    LiensPipe
+    LiensPipe,
+    BoolPipe
   ],
   imports: [
     CommonModule,

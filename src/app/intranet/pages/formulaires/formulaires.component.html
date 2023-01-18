@@ -17,65 +17,58 @@
     <h2 *ngIf="formulaire && index > -1">Vous éditez le formulaire <strong><em>{{ formulaire.titre }}</em></strong></h2>
     <h2 *ngIf="formulaire && index == -1">Vous créez un nouvel formulaire</h2>
     <form #f="ngForm">
-      <div>
-      <label for="titre">Titre *</label>
-      <input [(ngModel)]="formulaire.titre" name="titre" placeholder="Titre" required>
+      <article>
+        <div>
+          <label for="titre">Titre *</label>
+          <input [(ngModel)]="formulaire.titre" name="titre" placeholder="Titre" required>
 
-      <label for="alias">Alias *</label>
-      <input [(ngModel)]="formulaire.alias" name="alias" pattern="[a-z0-9\-\_]+"
-        placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
+          <label for="alias">Alias *</label>
+          <input [(ngModel)]="formulaire.alias" name="alias" pattern="[a-z0-9\-\_]+"
+            placeholder="Un mot sans espace ni majuscule ni caractères spéciaux" required>
 
-      <label for="alias">Email de destination</label>
-      <p>Un email sera envoyé à cette adresse si elle est renseignée lorsque le formulaire sera rempli.</p>
-        <input [(ngModel)]="formulaire.alias" name="email"
-          placeholder="Un email">
+          <label for="alias">Email de destination</label>
+          <p>Un email sera envoyé à cette adresse si elle est renseignée lorsque le formulaire sera rempli.</p>
+          <input [(ngModel)]="formulaire.email" name="email" placeholder="Un email">
 
-      <label for="alias">Destination</label>
-      <p>Destination vers laquelle envoyer les données du formulaire</p>
-          <input [(ngModel)]="formulaire.alias" name="destination"
+          <label for="alias">Destination</label>
+          <p>Destination vers laquelle envoyer les données du formulaire</p>
+          <input [(ngModel)]="formulaire.destination" name="destination"
             placeholder="Indiquez une éventuelle destination">
 
-      <label for="description">Description</label>
-      <p-editor name="description" [(ngModel)]="formulaire.description" [style]="{'height':'400px'}"></p-editor>
+          <label for="description">Description</label>
+          <p-editor name="description" [(ngModel)]="formulaire.description" [style]="{'height':'400px'}"></p-editor>
 
-      <label for="ordre">Ordre</label>
-      <input [(ngModel)]="formulaire.ordre" name="ordre" placeholder="0" type="number">
-    </div>
-    <div>
-      <i class="pi pi-plus-circle" (click)="ajouteChamp()"></i>
-      <ul *ngFor="let c of formulaire.champs; let i = index">
-        <li>Titre : {{ c.titre }}</li>
-        <li>Alias : {{ c.alias }}</li>
-        <li>Informations : {{ c.infos }}</li>
-        <li>Aide : {{ c.aide }}</li>
-        <li>Type : {{ c.type }}</li>
-        <li>Requis : {{ c.required }}</li>
-        <li>Options : {{ c.options }}</li>
-        <p class="edition">
-          <i class="pi pi-pencil" (click)="setEditChamp(i)"></i>
-          <i class="pi pi-trash" (click)="setSupprChamp(i)"></i>
-        </p>
-      </ul>
-    </div>
+          <label for="ordre">Ordre</label>
+          <input [(ngModel)]="formulaire.ordre" name="ordre" placeholder="0" type="number">
+        </div>
+        <div>
+          <i class="pi pi-plus-circle" (click)="setAjouteChamp()"></i>
+          <ul *ngFor="let c of formulaire.champs; let i = index" class="liste">
+            <p class="edition">
+              <i class="pi pi-pencil" (click)="setEditChamp(i)"></i>
+              <i class="pi pi-trash" (click)="setSupprChamp(i)"></i>
+            </p>
+            <li>Titre : <strong>{{ c.titre }}</strong></li>
+            <li>Alias : {{ c.alias }}</li>
+            <li>Informations : {{ c.infos }}</li>
+            <li>Aide : {{ c.aide }}</li>
+            <li>Type : {{ c.type }}</li>
+            <li>Requis : {{ c.required! | bool}}</li>
+            <li>Options : {{ c.options }}</li>
+
+          </ul>
+        </div>
+      </article>
       <article class="boutons">
         <button *ngIf="index != -1" (click)="supprFormulaire()" [disabled]="!f.valid" class="suppr">Supprimer</button>
         <button (click)="initFormulaire()" class="annule">Annuler</button>
-        <button (click)="addFormulaire()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">Enregistrer le nouvel
-          formulaire</button>
-        <button (click)="setFormulaire()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">Enregistrer les mises
-          à jours</button>
-        </article>
+        <button (click)="addFormulaire()" *ngIf="index == -1" class="valide" [disabled]="f.invalid">
+          Enregistrer le nouveau formulaire</button>
+        <button (click)="upFormulaire()" *ngIf="index != -1" class="valide" [disabled]="f.invalid">
+          Enregistrer les mises à jours</button>
+      </article>
     </form>
   </article>
-  <!-- AFFICHER LE RENDU DE le formulaire ECRIT -->
-  <!-- <article>
-    <h3>Présentation du formulaire</h3>
-    <h2>{{ formulaire.titre }}</h2>
-    <article [innerHTML]="formulaire.description"></article>
-    <div>
-      <input *ngFor="let f of formulaire.champs" placeholder="">
-    </div>
-  </article> -->
 </section>
 <section *ngIf="delBool" class="lightbox">
   <a class="close" (click)="delBool = false; index = -1"></a>
@@ -105,30 +98,36 @@
     <form (submit)="ajouteChamp()">
       <h3>Modifier les données du média</h3>
       <label>Titre *</label>
-      <input name="champTitre" name="champTitre" [(ngModel)]="formulaire.champs[indexChamp].titre" required>
+      <input name="champTitre" [(ngModel)]="champ.titre" required>
       <label>Alias *</label>
-      <input name="champAlias" name="champsAlias" [(ngModel)]="formulaire.champs[indexChamp].alias" required>
+      <input name="champAlias" [(ngModel)]="champ.alias" required>
       <label>Informations</label>
-      <input name="champInfos" name="champInfos" [(ngModel)]="formulaire.champs[indexChamp].infos" placeholder="Informations sur le champ">
+      <input name="champInfos" [(ngModel)]="champ.infos" placeholder="Informations sur le champ">
       <label>Aide</label>
-      <input name="champsAide" name="champsAide" [(ngModel)]="formulaire.champs[indexChamp].aide" placeholder="Aide donnée aux utilisateurs pour renseigner le champ">
-      <label>Type</label>
-      <select name="champInfos" [(ngModel)]="formulaire.champs[indexChamp].type" >
+      <input name="champsAide" [(ngModel)]="champ.aide"
+        placeholder="Aide donnée aux utilisateurs pour renseigner le champ">
+      <label>Type *</label>
+      <select name="champInfos" [(ngModel)]="champ.type" required>
         <option value="input">Texte simple (par défaut)</option>
         <option value="textarea">Texte étendu</option>
+        <option value="file">Fichier à téléverser</option>
         <option value="select">Liste</option>
         <option value="checkbox">Choix multiples</option>
         <option value="radio">Au choix</option>
       </select>
       <label>Requis *</label>
-      <input type="radio" name="champsRequis" value="false" checked>
-      <input type="radio" name="champsRequis" value="true">
-
+      <div>
+        <label>Non
+          <input type="radio" [(ngModel)]="champ.required" name="champsRequis" value="false" checked></label>
+        <label>Oui
+          <input type="radio" [(ngModel)]="champ.required" name="champsRequis" value="true"></label>
+      </div>
       <label>Options</label>
-      <input name="champsOptions" name="champsAide" [(ngModel)]="formulaire.champs[indexChamp].options" placeholder="Des options (pour les spécialistes)">
+      <input name="champsOptions" [(ngModel)]="champ.options"
+        placeholder="Des options (pour les spécialistes)">
       <div>
         <input type="reset" value="Annuler" (click)="initChamp()">
-        <input type="submit" value="Enregistrer les modifications">
+        <input type="submit" value="Ajouter le champ">
       </div>
     </form>
   </article>

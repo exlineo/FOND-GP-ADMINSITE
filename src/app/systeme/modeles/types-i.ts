@@ -21,7 +21,7 @@ export enum ChampE {
   area = 'textarea',
   select = 'select',
   checkbox = 'checkbox',
-  radio = 'radiobutton'
+  radio = 'radio'
 }
 export enum StyleE {
   blog = 'blog',
@@ -61,6 +61,7 @@ export interface LienMenuI {
   description?: string;
   cible?: CiblesE;
   menus: Array<string>;
+  sousmenu?:string;
   parent?: string;
   template?: TemplateE;
   formulaire?: FormulaireI;
