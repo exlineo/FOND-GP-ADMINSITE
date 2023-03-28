@@ -26,8 +26,8 @@ export class MenusComponent implements OnInit {
     this.filtreLiens = '';
   }
   /** Récupérer les lien du menu */
-  upLien(i:number){
-    this.lienMenu = this.get.liensMenus[i];
+  upLien(i:number, alias:string){
+    this.lienMenu = this.get.liensMenus.find(l => l.alias == alias)!;
     this.index = i;
   }
   /** Créer un lien */
@@ -40,7 +40,8 @@ export class MenusComponent implements OnInit {
     this.get.setFireDoc('liens', {uid:this.lienMenu.alias, doc:this.lienMenu})
     .then(r => {
       this.get.liensMenus.push(this.lienMenu);
-      this.get.liensMenus[this.index] = this.lienMenu;
+      const i = this.get.liensMenus.findIndex(l => l.alias == this.lienMenu.alias)!;
+      this.get.liensMenus[i] = this.lienMenu;
       this.get.msg.msgOk('Le lien a été ajouté', "Tout s'est bien passé, les données sont à jour.");
       this.init();
     })

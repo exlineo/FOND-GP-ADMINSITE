@@ -7,7 +7,7 @@
     <p>{{ get.pages['categories'].contenu }}</p>
   </div>
   <ul>
-    <li *ngFor="let m of get.categories let i = index" (click)="getCat(i)">{{ m.titre }}</li>
+    <li *ngFor="let m of get.categories let i = index" (click)="getCat(i, m.alias)">{{ m.titre }}</li>
   </ul>
 </aside>
 <section id="page">

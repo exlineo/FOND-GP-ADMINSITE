@@ -38,7 +38,8 @@ export class CategoriesComponent implements OnInit {
   editCat(){
     this.get.setFireDoc('categories', {uid:this.categorie.alias, doc:this.categorie})
     .then(r => {
-      this.get.categories[this.index] = this.categorie;
+      const i = this.get.categories.findIndex(l => l.alias == this.categorie.alias)!;
+      this.get.categories[i] = this.categorie;
       this.get.msg.msgOk('Catégorie mise à jour', 'Fastoche, la mise à jour est faite.');
       this.initCat();
     })
@@ -47,9 +48,9 @@ export class CategoriesComponent implements OnInit {
       console.log(er)});
   }
   /** Récupérer une catégorie */
-  getCat(i:number){
+  getCat(i:number, alias:string){
     this.index = i;
-    this.categorie = this.get.categories[i];
+    this.categorie = this.get.categories.find(c => c.alias == alias)!;
   }
   /** Supprimer la catégorie */
   supprCat(){

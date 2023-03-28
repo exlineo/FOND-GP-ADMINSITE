@@ -28,15 +28,17 @@ export class ArticlesComponent implements OnInit {
     this.filtreCat = '';
     this.filtreArticle = '';
   }
-  getArticle(index:number){
-    this.index = index;
-    this.article = this.get.articles[index];
+  /** Récupérer un article lorsqu'il est cliqué */
+  getArticle(i:number, alias:string){
+    this.index = i;
+    this.article = this.get.articles.find(a => a.alias == alias)!;
   }
   /** Crée catégorie */
   setArticle(){
     this.get.setFireDoc('articles', {uid:this.article.alias, doc:this.article})
     .then(r => {
-      this.get.articles[this.index] = this.article;
+      const i = this.get.articles.findIndex(l => l.alias == this.article.alias)!;
+      this.get.articles[i] = this.article;
       this.get.msg.msgOk('Article mis à jour', "Tout s'est bien passé, les données sont à jour.");
       this.initArticle();
     })

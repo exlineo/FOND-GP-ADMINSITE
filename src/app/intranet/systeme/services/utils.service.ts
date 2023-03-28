@@ -8,8 +8,13 @@ export class UtilsService {
   styles = [
     {
       titre:'Blog',
-      description:'Afficher les articles en ligne sur une colonne',
+      description:"Afficher les articles en ligne sur une colonne avec l'image d'intro à gauche du texte",
       alias:'blog'
+    },
+    {
+      titre:'Blog droit',
+      description:"Lister des articles avec l'image d'intro au-dessus du texte",
+      alias:'droit'
     },
     {
       titre:'Contact',
@@ -35,6 +40,11 @@ export class UtilsService {
       alias:'blog'
     },
     {
+      titre:'Page article',
+      description:"Afficher un article en particulier.",
+      alias:'pageArticle'
+    },
+    {
       titre:'Page blog alterné',
       description:"Affichage d'une liste d'articles sur deux colonnes alternés.",
       alias:'blogAlterne'
@@ -42,7 +52,7 @@ export class UtilsService {
     {
       titre:'Page Formulaire',
       description:'Créer une page de formulaire.',
-      alias:'equipe'
+      alias:'formulaire'
     },
     {
       titre:'Page annuaire',
@@ -74,21 +84,21 @@ export class UtilsService {
       description:"Affichage d'une page de contact.",
       alias:'contact'
     },
-    {
-      titre:'Page portfolio',
-      description:"Affichage d'un mur d'articles avec les images d'introduction en visuel.",
-      alias:'portfolio'
-    },
-    {
-      titre:"Page collection d'images",
-      description:"Afficher une collection d'images.",
-      alias:'collectionImages'
-    },
-    {
-      titre:'Page collection mixte',
-      description:"Afficher une collection mixte.",
-      alias:'collectionMixte'
-    }
+    // {
+    //   titre:'Page portfolio',
+    //   description:"Affichage d'un mur d'articles avec les images d'introduction en visuel.",
+    //   alias:'portfolio'
+    // },
+    // {
+    //   titre:"Page collection d'images",
+    //   description:"Afficher une collection d'images.",
+    //   alias:'collectionImages'
+    // },
+    // {
+    //   titre:'Page collection mixte',
+    //   description:"Afficher une collection mixte.",
+    //   alias:'collectionMixte'
+    // }
   ]
   constructor() { }
 }

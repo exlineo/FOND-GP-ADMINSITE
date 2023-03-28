@@ -25,6 +25,7 @@ export enum ChampE {
 }
 export enum StyleE {
   blog = 'blog',
+  article = 'article',
   alterne = 'alterne',
   equipe = 'equipe',
   mur = 'mur',
@@ -65,7 +66,7 @@ export interface LienMenuI {
   parent?: string;
   template?: TemplateE;
   formulaire?: FormulaireI;
-  style?: StyleE;
+  style?: string;
   categories?: Array<CategorieI>;
   articles?: Array<ArticleI>;
   ordre?: number;

@@ -34,7 +34,7 @@ export class ArticlesPipe implements PipeTransform {
   transform(value:Array<ArticleI>, str:string): Array<ArticleI> {
     if(!value) return [];
     if(!str || str.length < 3) return value;
-    return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 && f.alias.toLowerCase().indexOf(str.toLowerCase()));
+    return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 || f.alias.toLowerCase().indexOf(str.toLowerCase()) != -1);
   }
 }
 /** Filter les liens */
@@ -46,7 +46,7 @@ export class LiensPipe implements PipeTransform {
   transform(value:Array<LienMenuI>, str:string): Array<LienMenuI> {
     if(!value) return [];
     if(!str || str.length < 3) return value;
-    return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 && f.alias.toLowerCase().indexOf(str.toLowerCase()));
+    return value.filter(f => f.titre.toLowerCase().indexOf(str.toLowerCase()) != -1 || f.alias.toLowerCase().indexOf(str.toLowerCase()) != -1 || f.menus.toString().indexOf(str.toLowerCase()) != -1);
   }
 }
 /** Filter les catégories */

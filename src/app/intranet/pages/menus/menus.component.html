@@ -10,7 +10,7 @@
     <input type="search" [(ngModel)]="filtreLiens" name="filtre" placeholder="Filtrer les liens">
   </div>
   <ul>
-    <li *ngFor="let m of get.liensMenus | liens:filtreLiens; let i = index" (click)="upLien(i)">
+    <li *ngFor="let m of get.liensMenus | liens:filtreLiens; let i = index" (click)="upLien(i, m.alias)">
       {{ m.titre }} <span *ngIf="m.menus">({{ m.menus.toString() }})</span></li>
   </ul>
 </aside>

@@ -24,7 +24,6 @@ export class ListeMediasComponent implements OnInit {
 
   ngOnInit(): void {
     console.log(this.target);
-
   }
   /** Lorsqu'un média est cliqué lors d'une sélection */
   selectMedia(media?:MediaI){
@@ -38,6 +37,7 @@ export class ListeMediasComponent implements OnInit {
   /** Téléverser un fichier */
   televerseMedia(){
     this.get.televerse(this.file!, this.mediaForm);
+    this.initEdit();
   }
   /** Supprimer un média */
   setSuppr(i:number){
@@ -58,7 +58,7 @@ export class ListeMediasComponent implements OnInit {
   editMedia(){
     this.get.setFireDoc('medias', {uid:this.get.medias[this.index].id!, doc:this.get.medias[this.index]})
     .then(r => {
-      this.ngOnInit();
+      this.initEdit();
       this.get.msg.msgOk("Média mis à jour", `Voilà, c'est fait.`);
     })
     .catch(er => {
@@ -71,5 +71,6 @@ export class ListeMediasComponent implements OnInit {
     this.index = -1;
     this.editBool = false;
     this.delBool = false;
+    this.mediaForm = {titre:'', caption:'', url:''};
   }
 }

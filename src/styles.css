@@ -134,6 +134,7 @@ button{
   transition: all .3s ease;
   margin:5px;
   cursor: pointer;
+  font-family: 'Raleway', sans-serif;
 }
 button.suppr{
   background-color: var(--rose);
@@ -237,6 +238,9 @@ router-outlet + * {
   flex-flow: row nowrap;
 }
 /* COMPOSANTS SPECIFIQUES */
+.ql-editor{
+  font-family: 'Raleway', sans-serif;
+}
 app-connexion{
   background-color : var(--sombre);
 }

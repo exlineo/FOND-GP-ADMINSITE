@@ -10,7 +10,7 @@
     <input type="search" [(ngModel)]="filtreArticle" name="filtre" placeholder="Filtrer les articles">
   </div>
   <ul>
-    <li *ngFor="let m of get.articles | articles:filtreArticle; let i = index" (click)="getArticle(i)">{{ m.titre }} <span
+    <li *ngFor="let m of get.articles | articles:filtreArticle; let i = index" (click)="getArticle(i, m.alias)">{{ m.titre }} <span
         *ngIf="m.categories">({{ m.categories.toString() }})</span></li>
   </ul>
 </aside>
@@ -101,11 +101,11 @@
     <h3>Présentation de l'article</h3>
     <h2>{{ article.titre }}</h2>
     <blockquote>
-      <img [src]="article.mediaIntro.url" [alt]="article.mediaIntro.caption" *ngIf="article.mediaIntro">
+      <img [src]="article.mediaIntro?.url" [alt]="article.mediaIntro?.caption" *ngIf="article.mediaIntro?.url">
       <div [innerHTML]="article.intro"></div>
     </blockquote>
     <div>
-      <img [src]="article.mediaContenu.url" [alt]="article.mediaContenu.caption" *ngIf="article.mediaContenu">
+      <img [src]="article.mediaContenu?.url" [alt]="article.mediaContenu?.caption" *ngIf="article.mediaContenu?.url">
       <div [innerHTML]="article.contenu">
       </div>
     </div>
